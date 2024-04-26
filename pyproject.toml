@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "Biometric HealthCheck Bot"
+version = "0.1.0"
+description = "Checks status of services and notifies company members if something is offline."
+authors = ["Ilyas Rashitov <rashtv.19@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+requests = "^2.31.0"
+python-decouple = "^3.8"
+aiogram = "^3.4.1"
+redis = "^5.0.3"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

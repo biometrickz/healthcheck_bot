@@ -1,0 +1,11 @@
+# Python
+__pycache__/
+
+# Redis
+redis/
+
+# JetBrains | PyCharm
+.idea/
+
+# Environment Variable
+.env
