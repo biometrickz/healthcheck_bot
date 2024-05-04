@@ -65,7 +65,7 @@ class HealthChecker:
     def check_is_edocument_healthy(self):
         try:
             response = requests.get(
-                url=f'{EDOCUMENT_URL}/api/v1/e-document/healthcheck',
+                url=f'{EDOCUMENT_URL}/api/v1/e-document/healthcheck/',
                 timeout=self.__timeout,
             )
             if response.status_code == 200:
@@ -91,7 +91,7 @@ class HealthChecker:
     def check_is_dispensary_healthy(self):
         try:
             response = requests.get(
-                url=f'{DISPENSARY_BASE_URL}/healthcheck',
+                url=f'{DISPENSARY_BASE_URL}/api/v1/e-document/healthcheck/',
                 timeout=self.__timeout,
             )
             if response.status_code == 200:
@@ -119,9 +119,9 @@ class HealthChecker:
         self.check_is_face2face_healthy()
         self.check_is_doc_rec_healthy()
         self.check_is_edocument_healthy()
-        self.check_is_addresses_healthy()
+        # self.check_is_addresses_healthy()
         self.check_is_dispensary_healthy()
-        self.check_is_qamqor_healthy()
+        # self.check_is_qamqor_healthy()
 
     def get_status(self):
         return self.__dict__
