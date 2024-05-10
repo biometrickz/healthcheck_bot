@@ -3,10 +3,12 @@ from aiogram import Router, Bot
 from aiogram.filters import Command
 from aiogram.types import Message
 
-from app.service.healthchecker import healthchecker
+from app.service.healthchecker import (
+    healthchecker,
+)
 from settings.config import (
     REDIS_HOST,
-    REDIS_PORT,
+    REDIS_HOST_PORT,
     REDIS_DB,
 )
 
@@ -17,7 +19,7 @@ status_emojis = [cross_emoji, tick_emoji]
 router = Router()
 redis = Redis(
     host=REDIS_HOST,
-    port=REDIS_PORT,
+    port=REDIS_HOST_PORT,
     db=REDIS_DB,
 )
 

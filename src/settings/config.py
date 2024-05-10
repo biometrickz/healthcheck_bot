@@ -5,7 +5,8 @@ TOKEN: str = config('TOKEN', cast=str)
 
 # Redis
 REDIS_HOST: str = config('REDIS_HOST', cast=str)
-REDIS_PORT: int = config('REDIS_PORT', cast=int)
+REDIS_CONTAINER_PORT: int = config('REDIS_PORT', cast=int)
+REDIS_HOST_PORT: int = config('REDIS_PORT', cast=int)
 REDIS_DB: int = config('REDIS_DB', cast=int)
 
 # Liveness
