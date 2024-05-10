@@ -1,8 +1,8 @@
 import httpx
 
-from liveness.healthcheck import liveness_healthcheck
-from face2face.healthcheck import face2face_healthcheck
-from edocument.healthcheck import edocument_healthcheck
+from app.service.liveness.healthcheck import liveness_healthcheck
+from app.service.face2face.healthcheck import face2face_healthcheck
+from app.service.edocument.healthcheck import edocument_healthcheck
 
 from settings.config import (
     LIVENESS_URL,

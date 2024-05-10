@@ -10,6 +10,7 @@ services:
     env_file: .env
     volumes:
     - ./src:/src
+    - ./media:/media
     depends_on:
     - redis
 

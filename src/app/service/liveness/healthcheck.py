@@ -1,7 +1,6 @@
 import httpx
 
 from settings.config import (
-    BASE_DIR,
     LIVENESS_URL,
 )
 
@@ -17,7 +16,7 @@ expected_response = {
     'face_direction': 'forward',
 }
 
-with open(f'{BASE_DIR}/media/liveness/face_photo.jpg', 'rb') as f:
+with open('/media/liveness/face_photo.jpg', 'rb') as f:
     face_photo = f.read()
 files = {'face_photo': face_photo}
 

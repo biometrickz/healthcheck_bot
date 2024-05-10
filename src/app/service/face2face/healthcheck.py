@@ -2,7 +2,6 @@ import httpx
 
 from decimal import Decimal
 from settings.config import (
-    BASE_DIR,
     FACE2FACE_URL,
 )
 
@@ -12,9 +11,9 @@ expected_response = {
     'cosine_distance': Decimal(0.2535792589187622),
 }
 
-with open(f'{BASE_DIR}/media/face2face/image_1.jpg', 'rb') as f:
+with open('/media/face2face/image_1.jpg', 'rb') as f:
     image_1 = f.read()
-with open(f'{BASE_DIR}/media/face2face/image_2.jpg', 'rb') as f:
+with open('/media/face2face/image_2.jpg', 'rb') as f:
     image_2 = f.read()
 files = {
     'image_1': image_1,
