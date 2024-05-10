@@ -37,7 +37,7 @@ async def start_bot():
 async def start_healthcheck():
     logging.info('Starting healthcheck...')
     while True:
-        healthchecker.check_all()
+        await healthchecker.check_all()
         statuses = healthchecker.get_status_values()
 
         if not all(statuses):

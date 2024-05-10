@@ -1,4 +1,9 @@
+import os
+
 from decouple import config
+
+# Base Directory
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # Telegram
 TOKEN: str = config('TOKEN', cast=str)

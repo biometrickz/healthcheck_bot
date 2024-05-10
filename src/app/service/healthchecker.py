@@ -1,4 +1,8 @@
-import requests
+import httpx
+
+from liveness.healthcheck import liveness_healthcheck
+from face2face.healthcheck import face2face_healthcheck
+from edocument.healthcheck import edocument_healthcheck
 
 from settings.config import (
     LIVENESS_URL,
@@ -23,35 +27,40 @@ class HealthChecker:
         self.is_dispensary_healthy = True
         self.is_qamqor_healthy = True
 
-    def check_is_liveness_healthy(self):
+    async def check_is_liveness_healthy(self):
         try:
-            response = requests.get(
+            response = httpx.get(
                 url=f'{LIVENESS_URL}/healthcheck',
                 timeout=self.__timeout,
             )
             if response.status_code == 200:
                 self.is_liveness_healthy = True
             else:
-                self.is_liveness_healthy = False
-        except requests.exceptions.RequestException:
+                result = await liveness_healthcheck()
+                if not result[0]:
+                    self.is_liveness_healthy = False
+
+        except httpx.RequestError:
             self.is_liveness_healthy = False
 
-    def check_is_face2face_healthy(self):
+    async def check_is_face2face_healthy(self):
         try:
-            response = requests.get(
+            response = httpx.get(
                 url=f'{FACE2FACE_URL}/healthcheck',
                 timeout=self.__timeout,
             )
             if response.status_code == 200:
                 self.is_face2face_healthy = True
             else:
-                self.is_face2face_healthy = False
-        except requests.exceptions.RequestException:
+                result = await face2face_healthcheck()
+                if not result[0]:
+                    self.is_face2face_healthy = False
+        except httpx.RequestError:
             self.is_face2face_healthy = False
 
     def check_is_doc_rec_healthy(self):
         try:
-            response = requests.get(
+            response = httpx.get(
                 url=f'{DOC_RECOGNITION_URL}/healthcheck',
                 timeout=self.__timeout,
             )
@@ -59,25 +68,27 @@ class HealthChecker:
                 self.is_doc_recognition_healthy = True
             else:
                 self.is_doc_recognition_healthy = False
-        except requests.exceptions.RequestException:
+        except httpx.RequestError:
             self.is_doc_recognition_healthy = False
 
-    def check_is_edocument_healthy(self):
+    async def check_is_edocument_healthy(self):
         try:
-            response = requests.get(
+            response = httpx.get(
                 url=f'{EDOCUMENT_URL}/api/v1/e-document/healthcheck/',
                 timeout=self.__timeout,
             )
             if response.status_code == 200:
                 self.is_edocument_healthy = True
             else:
-                self.is_edocument_healthy = False
-        except requests.exceptions.RequestException:
+                result = await edocument_healthcheck()
+                if not result[0]:
+                    self.is_edocument_healthy = False
+        except httpx.RequestError:
             self.is_edocument_healthy = False
 
     def check_is_addresses_healthy(self):
         try:
-            response = requests.get(
+            response = httpx.get(
                 url=f'{ADDRESS_BASE_URL}/api/v1/government/healthcheck',
                 timeout=self.__timeout,
             )
@@ -85,12 +96,12 @@ class HealthChecker:
                 self.is_addresses_healthy = True
             else:
                 self.is_addresses_healthy = False
-        except requests.exceptions.RequestException:
+        except httpx.RequestError:
             self.is_addresses_healthy = False
 
     def check_is_dispensary_healthy(self):
         try:
-            response = requests.get(
+            response = httpx.get(
                 url=f'{DISPENSARY_BASE_URL}/api/v1/e-document/healthcheck/',
                 timeout=self.__timeout,
             )
@@ -98,12 +109,12 @@ class HealthChecker:
                 self.is_dispensary_healthy = True
             else:
                 self.is_dispensary_healthy = False
-        except requests.exceptions.RequestException:
+        except httpx.RequestError:
             self.is_dispensary_healthy = False
 
     def check_is_qamqor_healthy(self):
         try:
-            response = requests.get(
+            response = httpx.get(
                 url=f'{QAMQOR_FACE_SEARCH_BASE_URL}/healthcheck',
                 timeout=self.__timeout,
             )
@@ -111,14 +122,14 @@ class HealthChecker:
                 self.is_qamqor_healthy = True
             else:
                 self.is_qamqor_healthy = False
-        except requests.exceptions.RequestException:
+        except httpx.RequestError:
             self.is_qamqor_healthy = False
 
-    def check_all(self):
-        self.check_is_liveness_healthy()
-        self.check_is_face2face_healthy()
+    async def check_all(self):
+        await self.check_is_liveness_healthy()
+        await self.check_is_face2face_healthy()
         self.check_is_doc_rec_healthy()
-        self.check_is_edocument_healthy()
+        await self.check_is_edocument_healthy()
         # self.check_is_addresses_healthy()
         self.check_is_dispensary_healthy()
         # self.check_is_qamqor_healthy()
