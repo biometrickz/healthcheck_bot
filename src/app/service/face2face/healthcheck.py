@@ -21,7 +21,7 @@ files = {
 }
 
 
-async def send_face2face_request():
+async def send_face2face_request() -> httpx.Response:
     async with httpx.AsyncClient() as client:
         response = await client.post(
             url=f'{FACE2FACE_URL}/verify',

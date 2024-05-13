@@ -30,7 +30,7 @@ class HealthChecker:
     async def check_is_liveness_healthy(self):
         try:
             response = httpx.get(
-                url=f'{LIVENESS_URL}/healthcheck',
+                url=f'{LIVENESS_URL}/healthcheck/',
                 timeout=self.__timeout,
             )
             if response.status_code == 200:

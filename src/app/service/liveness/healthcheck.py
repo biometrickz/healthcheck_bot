@@ -21,7 +21,7 @@ with open('/media/liveness/face_photo.jpg', 'rb') as f:
 files = {'face_photo': face_photo}
 
 
-async def send_liveness_request():
+async def send_liveness_request() -> httpx.Response:
     async with httpx.AsyncClient() as client:
         response = await client.post(
             url=f'{LIVENESS_URL}/face-details/',

@@ -20,7 +20,7 @@ json = {
 }
 
 
-async def send_edocument_request():
+async def send_edocument_request() -> httpx.Response:
     async with httpx.AsyncClient() as client:
         response = await client.post(
             url=f'{EDOCUMENT_URL}/api/v1/e-document/mcdb/check',
