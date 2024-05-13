@@ -43,7 +43,8 @@ async def start_healthcheck():
         if not all(statuses):
             await send_statuses_message(
                 bot=bot,
-                **healthchecker.get_status(),
+                **healthchecker.get_statuses(),
+                **healthchecker.get_codes(),
             )
             await asyncio.sleep(60)
         else:

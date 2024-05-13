@@ -3,6 +3,8 @@ import httpx
 from settings.config import (
     EDOCUMENT_URL,
     EDOCUMENT_API_KEY,
+    PERSONAL_ID_NUMBER,
+    PHONE_NUMBER,
 )
 
 expected_response = {
@@ -15,8 +17,8 @@ headers = {
 }
 
 json = {
-    'iin': '021019550504',
-    'phone': '77083445001',
+    'iin': PERSONAL_ID_NUMBER,
+    'phone': PHONE_NUMBER,
 }
 
 

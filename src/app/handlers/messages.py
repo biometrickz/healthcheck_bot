@@ -45,21 +45,29 @@ async def start_handler(message: Message):
 def create_healthcheck_message(
     **kwargs
 ):
-    message = "Statuses of Biometric Service:\n"
-    message += f"Liveness: {status_emojis[kwargs.get('is_liveness_healthy')]}\n"
-    message += f"Face2Face: {status_emojis[kwargs.get('is_face2face_healthy')]}\n"
-    message += f"DocRecognition: {status_emojis[kwargs.get('is_doc_recognition_healthy')]}\n"
-    message += f"EDocument: {status_emojis[kwargs.get('is_edocument_healthy')]}\n"
-    message += f"Addresses: {status_emojis[kwargs.get('is_addresses_healthy')]}\n"
-    message += f"Dispensary: {status_emojis[kwargs.get('is_dispensary_healthy')]}\n"
-    message += f"Qamqor FS: {status_emojis[kwargs.get('is_qamqor_healthy')]}"
+    message = "Statuses of Biometric Services:\n"
+    message += (f"Liveness: {status_emojis[kwargs.get('is_liveness_healthy')]} | "
+                f"code: {kwargs.get('liveness_code')}\n")
+    message += (f"Face2Face: {status_emojis[kwargs.get('is_face2face_healthy')]} | "
+                f"code: {kwargs.get('face2face_code')}\n")
+    message += (f"DocRecognition: {status_emojis[kwargs.get('is_doc_recognition_healthy')]} | "
+                f"code: {kwargs.get('doc_recognition_code')}\n")
+    message += (f"EDocument: {status_emojis[kwargs.get('is_edocument_healthy')]} | "
+                f"code: {kwargs.get('edocument_code')}\n")
+    message += (f"Addresses: {status_emojis[kwargs.get('is_addresses_healthy')]} | "
+                f"code: {kwargs.get('addresses_code')}\n")
+    message += (f"Dispensary: {status_emojis[kwargs.get('is_dispensary_healthy')]} | "
+                f"code: {kwargs.get('dispensary_code')}\n")
+    message += (f"Qamqor FS: {status_emojis[kwargs.get('is_qamqor_healthy')]} | "
+                f"code: {kwargs.get('qamqor_code')}")
     return message
 
 
 @router.message(Command('check'))
 async def check_handler(message: Message):
-    results = healthchecker.get_status()
-    healthcheck_message = create_healthcheck_message(**results)
+    statuses = healthchecker.get_statuses()
+    codes = healthchecker.get_codes()
+    healthcheck_message = create_healthcheck_message(**statuses, **codes)
     await message.answer(healthcheck_message)
 
 

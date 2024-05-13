@@ -32,3 +32,7 @@ QAMQOR_FACE_SEARCH_BASE_URL: str = config('QAMQOR_FACE_SEARCH_BASE_URL', cast=st
 # Address
 ADDRESS_BASE_URL: str = config('ADDRESS_BASE_URL', cast=str)
 ADDRESS_API_KEY: str = config('ADDRESS_API_KEY', cast=str)
+
+# Personal Data
+PERSONAL_ID_NUMBER: str = config('PERSONAL_ID_NUMBER', cast=str)
+PHONE_NUMBER: str = config('PHONE_NUMBER', cast=str)
