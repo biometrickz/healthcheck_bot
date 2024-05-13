@@ -26,6 +26,7 @@ async def send_face2face_request() -> httpx.Response:
         response = await client.post(
             url=f'{FACE2FACE_URL}/verify',
             files=files,
+            timeout=30,
         )
         return response
 

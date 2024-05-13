@@ -26,6 +26,7 @@ async def send_liveness_request() -> httpx.Response:
         response = await client.post(
             url=f'{LIVENESS_URL}/face-details/',
             files=files,
+            timeout=30,
         )
         return response
 
