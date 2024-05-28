@@ -12,9 +12,7 @@ from settings.config import (
     REDIS_DB,
 )
 
-cross_emoji = u'\u274C'
-tick_emoji = u'\u2705'
-status_emojis = [cross_emoji, tick_emoji]
+status_emojis = ['❌', '✅']
 
 router = Router()
 redis = Redis(
@@ -25,7 +23,7 @@ redis = Redis(
 
 
 @router.message(Command('start'))
-async def start_handler(message: Message):
+async def start_handler(message: Message) -> None:
     await redis.sadd(
         'chat_ids',
         str(message.chat.id),
@@ -34,7 +32,7 @@ async def start_handler(message: Message):
 
 
 @router.message(Command('stop'))
-async def start_handler(message: Message):
+async def start_handler(message: Message) -> None:
     await redis.srem(
         'chat_ids',
         str(message.chat.id),
@@ -44,7 +42,7 @@ async def start_handler(message: Message):
 
 def create_healthcheck_message(
     **kwargs
-):
+) -> str:
     message = "Statuses of Biometric Services:\n"
     message += (f"Liveness: {status_emojis[kwargs.get('is_liveness_healthy')]} | "
                 f"code: {kwargs.get('liveness_code')}\n")
@@ -64,7 +62,7 @@ def create_healthcheck_message(
 
 
 @router.message(Command('check'))
-async def check_handler(message: Message):
+async def check_handler(message: Message) -> None:
     statuses = healthchecker.get_statuses()
     codes = healthchecker.get_codes()
     healthcheck_message = create_healthcheck_message(**statuses, **codes)
@@ -72,6 +70,7 @@ async def check_handler(message: Message):
 
 
 async def send_statuses_message(
+    *,
     bot: Bot,
     **kwargs
 ):

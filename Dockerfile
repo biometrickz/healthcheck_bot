@@ -12,16 +12,11 @@ ENV PYTHONUNBUFFERED=1 \
 
 
 RUN apt-get update && apt-get upgrade -y \
-    && apt-get install --no-install-recommends -y \
-    curl \
-    # Installing `poetry` package manager:
-    # https://github.com/python-poetry/poetry
+    && apt-get install --no-install-recommends -y curl \
     && curl -sSL 'https://install.python-poetry.org' | python - \
     && poetry --version \
-    # Cleaning cache:
     && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
     && apt-get clean -y && rm -rf /var/lib/apt/lists/* \
-    # Set timezone:
     && ln -fs /usr/share/zoneinfo/Asia/Almaty /etc/localtime \
     && echo "Asia/Almaty" > /etc/timezone
 
