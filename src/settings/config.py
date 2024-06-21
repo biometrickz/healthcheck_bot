@@ -22,6 +22,10 @@ FACE2FACE_URL = config('FACE2FACE_URL', cast=str)
 EDOCUMENT_URL: str = config('EDOCUMENT_BASE_URL', cast=str)
 EDOCUMENT_API_KEY: str = config('EDOCUMENT_API_KEY', cast=str)
 
+# EDocument
+EDOCUMENT_V2_URL: str = config('EDOCUMENT_V2_BASE_URL', cast=str)
+EDOCUMENT_V2_API_KEY: str = config('EDOCUMENT_V2_API_KEY', cast=str)
+
 # Dispensary
 DISPENSARY_BASE_URL: str = config('DISPENSARY_BASE_URL', cast=str)
 DISPENSARY_API_KEY: str = config('DISPENSARY_API_KEY', cast=str)
