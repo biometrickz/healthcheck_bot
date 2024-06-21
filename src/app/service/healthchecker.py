@@ -4,6 +4,7 @@ import httpx
 
 from app.service.dispensary.healthcheck import dispensary_healthcheck
 from app.service.edocument.healthcheck import edocument_healthcheck
+from app.service.edocument_v2.healthcheck import edocument_v2_healthcheck
 from app.service.face2face.healthcheck import face2face_healthcheck
 from app.service.liveness.healthcheck import liveness_healthcheck
 
@@ -32,6 +33,7 @@ class HealthChecker:
         self.face2face: ServiceStatus = ServiceStatus()
         self.doc_recognition: ServiceStatus = ServiceStatus()
         self.edocument: ServiceStatus = ServiceStatus()
+        self.edocument_v2: ServiceStatus = ServiceStatus()
         self.ekyzmet: ServiceStatus = ServiceStatus()
         self.dispensary: ServiceStatus = ServiceStatus()
         self.qamqor: ServiceStatus = ServiceStatus()
@@ -90,6 +92,18 @@ class HealthChecker:
             self.edocument.is_healthy = False
             self.edocument.status_code = 500
 
+    async def check_is_edocument_v2_healthy(self):
+        try:
+            status, code = await edocument_v2_healthcheck()
+            if status and code == 200:
+                self.edocument_v2.is_healthy = True
+            else:
+                self.edocument_v2.is_healthy = False
+            self.edocument_v2.status_code = code
+        except httpx.RequestError:
+            self.edocument_v2.is_healthy = False
+            self.edocument_v2.status_code = 500
+
     async def check_is_addresses_healthy(self):
         try:
             async with httpx.AsyncClient(
@@ -144,6 +158,7 @@ class HealthChecker:
             self.check_is_face2face_healthy(),
             self.check_is_doc_rec_healthy(),
             self.check_is_edocument_healthy(),
+            self.check_is_edocument_v2_healthy(),
             # self.check_is_addresses_healthy(),
             self.check_is_dispensary_healthy(),
             # self.check_is_qamqor_healthy()
@@ -155,6 +170,7 @@ class HealthChecker:
             'is_face2face_healthy': self.face2face.is_healthy,
             'is_doc_recognition_healthy': self.doc_recognition.is_healthy,
             'is_edocument_healthy': self.edocument.is_healthy,
+            'is_edocument_v2_healthy': self.edocument_v2.is_healthy,
             'is_addresses_healthy': self.ekyzmet.is_healthy,
             'is_dispensary_healthy': self.dispensary.is_healthy,
             'is_qamqor_healthy': self.qamqor.is_healthy,
@@ -166,6 +182,7 @@ class HealthChecker:
             'face2face_code': self.face2face.status_code,
             'doc_recognition_code': self.doc_recognition.status_code,
             'edocument_code': self.edocument.status_code,
+            'edocument_v2_code': self.edocument_v2.status_code,
             'addresses_code': self.ekyzmet.status_code,
             'dispensary_code': self.dispensary.status_code,
             'qamqor_code': self.qamqor.status_code,

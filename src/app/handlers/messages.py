@@ -50,8 +50,10 @@ def create_healthcheck_message(
                 f"code: {kwargs.get('face2face_code')}\n")
     message += (f"DocRecognition: {status_emojis[kwargs.get('is_doc_recognition_healthy')]} | "
                 f"code: {kwargs.get('doc_recognition_code')}\n")
-    message += (f"EDocument: {status_emojis[kwargs.get('is_edocument_healthy')]} | "
+    message += (f"[OLD] E-Document: {status_emojis[kwargs.get('is_edocument_healthy')]} | "
                 f"code: {kwargs.get('edocument_code')}\n")
+    message += (f"E-Document: {status_emojis[kwargs.get('is_edocument_v2_healthy')]} | "
+                f"code: {kwargs.get('edocument_v2_code')}\n")
     message += (f"Addresses: {status_emojis[kwargs.get('is_addresses_healthy')]} | "
                 f"code: {kwargs.get('addresses_code')}\n")
     message += (f"Dispensary: {status_emojis[kwargs.get('is_dispensary_healthy')]} | "

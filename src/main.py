@@ -46,9 +46,9 @@ async def start_healthcheck():
                 **healthchecker.get_statuses(),
                 **healthchecker.get_codes(),
             )
-            await asyncio.sleep(180)
+            await asyncio.sleep(120)
         else:
-            await asyncio.sleep(60)
+            await asyncio.sleep(300)
 
 
 async def main():
